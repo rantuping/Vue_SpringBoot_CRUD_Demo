@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tu.dao.UserDAO">
+    <!-- 查询所有的方法 -->
+    <select id="findAll" resultType="com.tu.entity.User">
+        select id,name,sex,bir,address from tuser
+    </select>
+
+    <!-- 分页查询，这里两个参数，就不写参数类型了-->
+    <select id="findByPage" resultType="com.tu.entity.User">
+        select id,name,sex,bir,address
+        from tuser
+        limit #{start},#{rows}
+    </select>
+
+    <!-- 查询所有条数-->
+    <select id="findTotals" resultType="java.lang.Long">
+        select count(id) from tuser
+    </select>
+
+    <!--  新增用户信息  -->
+    <insert id="save" parameterType="com.tu.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into tuser values(#{id},#{name},#{sex},#{bir},#{address})
+    </insert>
+
+    <!-- 修改用户信息 -->
+    <update id="update" parameterType="com.tu.entity.User">
+        update tuser set name=#{name},sex=#{sex},bir=#{bir},address=#{address}
+        where id=#{id}
+    </update>
+
+    <!--  根据id删除用户信息  -->
+    <delete id="delete" parameterType="String">
+        delete from tuser where id=#{id}
+    </delete>
+</mapper>
